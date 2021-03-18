@@ -63,9 +63,12 @@ blocks:
           - checkout
           - cd services/billing
           - sem-version go 1.9
-          - cache store
-          - go get ./...
+          - export GO111MODULE=on
+          - export GOPATH=~/go
+          - export GOBIN=$GOPATH/bin
           - cache restore
+          - go get ./...
+          - cache store
       jobs:
         - name: Lint
           commands:

@@ -1,4 +1,4 @@
-module github.com/semaphoreci-demos/sempahore-demo-monorepo
+module github.com/semaphoreci-demos/sempahore-demo-monorepo/services/billing
 
 go 1.15
 
