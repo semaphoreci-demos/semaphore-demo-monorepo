@@ -11,8 +11,11 @@ blocks:
       prologue:
         commands:
           - checkout
+          - sem-version elixir 1.9
           - cd services/ui
           - cache restore
+          - mix local.hex --force
+          - mix local.rebar --force
           - mix deps.get
           - mix deps.compile
           - cache store
