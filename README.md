@@ -10,7 +10,7 @@ Semaphore.
 
 The CI pipeline will look like this:
 
-![CI pipeline on Semaphore](public/ci-pipeline.png)
+<img src="public/ci-pipeline.png" width="256" title="CI pipeline on Semaphore">
 
 The example pipeline contains 3 blocks.
 
