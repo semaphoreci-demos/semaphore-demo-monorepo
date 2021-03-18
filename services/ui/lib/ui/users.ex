@@ -1,4 +1,8 @@
 defmodule Ui.Users do
+  @moduledoc """
+  Access to the Users service.
+  """
+
   @users [
     %{id: "1", name: "Peter"},
     %{id: "2", name: "John"},

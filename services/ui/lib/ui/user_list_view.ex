@@ -1,4 +1,8 @@
 defmodule Ui.UserListView do
+  @moduledoc """
+  HTML view for the user list.
+  """
+
   def render(users) do
     """
     <html>

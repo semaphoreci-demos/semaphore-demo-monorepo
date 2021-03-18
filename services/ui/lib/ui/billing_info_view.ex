@@ -1,4 +1,8 @@
 defmodule Ui.BillingInfoView do
+  @moduledoc """
+  HTML view for the billing information.
+  """
+
   def render(user, billing_info) do
     """
     <html>

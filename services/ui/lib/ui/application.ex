@@ -1,4 +1,7 @@
 defmodule Ui.Application do
+  @moduledoc """
+  Main application that boots up the UI component.
+  """
   use Application
 
   def start(_type, _args) do
