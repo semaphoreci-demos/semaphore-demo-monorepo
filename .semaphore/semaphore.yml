@@ -6,19 +6,25 @@ agent:
     os_image: ubuntu1804
 blocks:
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
+    dependencies: []
     task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/ui
+          - cache restore
+          - mix deps.get
+          - mix deps.compile
+          - cache store
+
       jobs:
         - name: Lint
           commands:
             - make lint
         - name: Test
           commands:
-            - make test
-      prologue:
-        commands:
-          - checkout
-          - cd services/ui
-    dependencies: []
+            - mix test
+
   - name: "\U0001F64E — User Service"
     dependencies: []
     task:
@@ -33,6 +39,7 @@ blocks:
         - name: Test
           commands:
             - make test
+
   - name: "\U0001F4B0 — Billing Service"
     dependencies: []
     task:
