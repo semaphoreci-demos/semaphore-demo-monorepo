@@ -25,7 +25,7 @@ blocks:
       jobs:
         - name: Lint
           commands:
-            - make lint
+            - mix credo
         - name: Test
           commands:
             - mix test
