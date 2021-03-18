@@ -1,0 +1,49 @@
+version: v1.0
+name: Monorepo Demo
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
+    task:
+      jobs:
+        - name: Lint
+          commands:
+            - make lint
+        - name: Test
+          commands:
+            - make test
+      prologue:
+        commands:
+          - checkout
+          - cd services/ui
+    dependencies: []
+  - name: "\U0001F64E — User Service"
+    dependencies: []
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/users
+      jobs:
+        - name: Lint
+          commands:
+            - make lint
+        - name: Test
+          commands:
+            - make test
+  - name: "\U0001F4B0 — Billing Service"
+    dependencies: []
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/billing
+      jobs:
+        - name: Lint
+          commands:
+            - make lint
+        - name: Test
+          commands:
+            - make test
