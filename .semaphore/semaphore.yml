@@ -62,10 +62,15 @@ blocks:
         commands:
           - checkout
           - cd services/billing
+          - sem-version go 1.9
+          - cache store
+          - go get ./...
+          - cache restore
       jobs:
         - name: Lint
           commands:
-            - make lint
+            - gofmt -l .
+
         - name: Test
           commands:
-            - make test
+            - go test ./...
