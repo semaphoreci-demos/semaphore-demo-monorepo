@@ -10,7 +10,7 @@ import (
 
 type BillingInfo struct {
 	LastCharge string `json:"last_charge"`
-	Discount   string `json:"last_charge"`
+	Discount   string `json:"discount"`
 }
 
 func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,18 +29,26 @@ func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
 		Discount:   fmt.Sprintf("%d%%", discount),
 	}
 
-	res, err := json.Marshal(info)
+	res, err := json.Marshal(&info)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Fprint(w, res)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
+var Router *mux.Router
+
+func Initialize() {
+	Router = mux.NewRouter()
+
+	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
 }
 
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
+	Initialize()
 
-	http.Handle("/", r)
+	http.Handle("/", Router)
 }
