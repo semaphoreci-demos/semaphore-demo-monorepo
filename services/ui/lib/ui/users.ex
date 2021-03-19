@@ -4,6 +4,9 @@ defmodule Ui.Users do
   """
 
   defmodule User do
+    @moduledoc """
+    Data values about a perticular user.
+    """
     defstruct [:name, :id]
   end
 

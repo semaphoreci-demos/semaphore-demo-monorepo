@@ -4,6 +4,9 @@ defmodule Ui.Billing do
   """
 
   defmodule BillingInfo do
+    @moduledoc """
+    Information about billing for one user.
+    """
     defstruct [:last_charge, :discount]
   end
 

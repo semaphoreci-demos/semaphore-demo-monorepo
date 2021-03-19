@@ -1,4 +1,8 @@
 defmodule Ui.Config do
+  @moduledoc """
+  Configuration values for accessing other services.
+  """
+
   def billing_endpoint do
     System.get_env("BILLING_ENDPOINT") || "localhost:8000"
   end
