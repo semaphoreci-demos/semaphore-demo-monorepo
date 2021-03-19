@@ -62,10 +62,7 @@ blocks:
         commands:
           - checkout
           - cd services/billing
-          - sem-version go 1.9
-          - export GO111MODULE=on
-          - export GOPATH=~/go
-          - export GOBIN=$GOPATH/bin
+          - sem-version go 1.14
           - cache restore
           - go get ./...
           - cache store
