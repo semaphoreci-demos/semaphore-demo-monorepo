@@ -24,7 +24,9 @@ defmodule Ui.MixProject do
     [
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 3.1"}
     ]
   end
 end

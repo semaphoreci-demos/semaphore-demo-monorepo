@@ -15,6 +15,10 @@ defmodule Ui.UserListView do
     """
   end
 
+  def render_list(users) when users == [] do
+    "<p>No users registered in the system</p>"
+  end
+
   def render_list(users) do
     "<table>#{Enum.map(users, &render_user/1) |> Enum.join("\n")}</table>"
   end

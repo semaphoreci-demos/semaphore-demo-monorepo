@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
+	handlers "github.com/gorilla/handlers"
 	mux "github.com/gorilla/mux"
 )
 
@@ -45,10 +47,19 @@ func Initialize() {
 	Router = mux.NewRouter()
 
 	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
+
+	http.Handle("/", Router)
 }
 
 func main() {
 	Initialize()
 
-	http.Handle("/", Router)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, Router)
+
+	srv := &http.Server{
+		Handler: loggedRouter,
+		Addr:    "127.0.0.1:8000",
+	}
+
+	srv.ListenAndServe()
 }

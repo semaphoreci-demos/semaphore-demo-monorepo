@@ -3,7 +3,16 @@ defmodule Ui.Billing do
   Access to the Billing service.
   """
 
+  defmodule BillingInfo do
+    defstruct [:last_charge, :discount]
+  end
+
   def get_info(user_id) do
-    %{last_charge: "$670.00", discount: "10%"}
+    endpoint = Ui.Config.billing_endpoint()
+    path = "#{endpoint}/billing/#{user_id}/info"
+
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} = HTTPoison.get(path)
+
+    Poison.decode!(body, as: %BillingInfo{})
   end
 end
