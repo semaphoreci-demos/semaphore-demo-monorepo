@@ -33,3 +33,18 @@ blocks:
             - bundle install
             - cache store
             - bundle exec ruby test.rb
+  - name: UI
+    dependencies: []
+    task:
+      jobs:
+        - name: elixir test
+          commands:
+            - checkout
+            - cd services/ui
+            - sem-version elixir 1.9
+            - cache restore
+            - mix local.hex --force
+            - mix local.rebar --force
+            - mix deps.get
+            - mix deps.compile
+            - cache store
