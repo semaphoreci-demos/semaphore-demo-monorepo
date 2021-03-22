@@ -1,11 +1,11 @@
 version: v1.0
-name: Go
+name: Monorepo CI
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Test
+  - name: "\U0001F4B0 — Billing Service"
     task:
       jobs:
         - name: go test
@@ -20,7 +20,7 @@ blocks:
             - go test ./...
             - go build -v .
     dependencies: []
-  - name: Users
+  - name: "\U0001F64E — User Service"
     dependencies: []
     task:
       jobs:
@@ -33,7 +33,7 @@ blocks:
             - bundle install
             - cache store
             - bundle exec ruby test.rb
-  - name: UI
+  - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     task:
       jobs:
