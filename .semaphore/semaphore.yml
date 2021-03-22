@@ -19,3 +19,17 @@ blocks:
             - go get ./...
             - go test ./...
             - go build -v .
+    dependencies: []
+  - name: Users
+    dependencies: []
+    task:
+      jobs:
+        - name: ruby test
+          commands:
+            - sem-version ruby 2.5
+            - checkout
+            - cd services/users
+            - cache restore
+            - bundle install
+            - cache store
+            - bundle exec ruby test.rb
