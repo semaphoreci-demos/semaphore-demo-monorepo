@@ -21,7 +21,7 @@ blocks:
             - go build -v .
     dependencies: []
     run:
-      when: change_in('/services/billing')
+      when: '"change_in(''/services/billing'')"'
   - name: "\U0001F64E — User Service"
     dependencies: []
     task:
