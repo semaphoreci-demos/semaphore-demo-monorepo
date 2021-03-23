@@ -21,7 +21,7 @@ blocks:
             - go build -v .
     dependencies: []
     run:
-      when: change_in('/services/billing')
+      when: 'change_in(''/services/billing'', { pipeline_file: ''ignore''})'
   - name: "\U0001F64E — User Service"
     dependencies: []
     task:
@@ -36,7 +36,7 @@ blocks:
             - cache store
             - bundle exec ruby test.rb
     run:
-      when: change_in('/services/ui')
+      when: 'change_in(''/services/ui'', { pipeline_file: ''ignore''})'
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     task:
@@ -54,4 +54,4 @@ blocks:
             - cache store
             - mix test
     run:
-      when: change_in('/services/users')
+      when: 'change_in(''/services/users'', { pipeline_file: ''ignore''})'
