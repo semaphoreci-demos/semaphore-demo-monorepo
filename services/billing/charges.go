@@ -3,15 +3,24 @@ package main
 import (
 	"fmt"
 	"sort"
+	"time"
 )
 
 type Charge struct {
-	UserID     string `json:"user_id"`
-	Amount     int    `json:"amount"`
-	InsertedAt int    `json:"inserted_at"`
+	UserID     string    `json:"user_id"`
+	Amount     int       `json:"amount"`
+	InsertedAt time.Time `json:"inserted_at"`
 }
 
 var charges = []Charge{}
+
+func AddCharge(userID string, amount int) {
+	charges = append(charges, Charge{
+		UserID:     userID,
+		Amount:     amount,
+		InsertedAt: time.Now(),
+	})
+}
 
 func FindLastCharge(userID string) (*Charge, error) {
 	res := []Charge{}
@@ -23,7 +32,7 @@ func FindLastCharge(userID string) (*Charge, error) {
 	}
 
 	sort.SliceStable(res, func(i, j int) bool {
-		return res[i].InsertedAt > res[i].InsertedAt
+		return res[i].InsertedAt.After(res[i].InsertedAt)
 	})
 
 	if len(res) == 0 {

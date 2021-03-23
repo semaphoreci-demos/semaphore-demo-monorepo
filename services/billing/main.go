@@ -4,13 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
+	handlers "github.com/gorilla/handlers"
 	mux "github.com/gorilla/mux"
 )
 
 type BillingInfo struct {
 	LastCharge string `json:"last_charge"`
-	Discount   string `json:"last_charge"`
+	Discount   string `json:"discount"`
 }
 
 func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,18 +31,35 @@ func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
 		Discount:   fmt.Sprintf("%d%%", discount),
 	}
 
-	res, err := json.Marshal(info)
+	res, err := json.Marshal(&info)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Fprint(w, res)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
+var Router *mux.Router
+
+func Initialize() {
+	Router = mux.NewRouter()
+
+	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
+
+	http.Handle("/", Router)
 }
 
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
+	Initialize()
 
-	http.Handle("/", r)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, Router)
+
+	srv := &http.Server{
+		Handler: loggedRouter,
+		Addr:    "127.0.0.1:8000",
+	}
+
+	srv.ListenAndServe()
 }

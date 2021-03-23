@@ -3,17 +3,23 @@ defmodule Ui.Users do
   Access to the Users service.
   """
 
-  @users [
-    %{id: "1", name: "Peter"},
-    %{id: "2", name: "John"},
-    %{id: "3", name: "Simon"}
-  ]
+  defmodule User do
+    @moduledoc """
+    Data values about a perticular user.
+    """
+    defstruct [:name, :id]
+  end
 
   def fetch(user_id) do
-    @users |> Enum.find(fn u -> u.id == user_id end)
+    fetch_all() |> Enum.find(fn u -> u.id == user_id end)
   end
 
   def fetch_all do
-    @users
+    endpoint = Ui.Config.users_endpoint()
+    path = "#{endpoint}/users"
+
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} = HTTPoison.get(path)
+
+    Poison.decode!(body, as: [%User{}])
   end
 end
