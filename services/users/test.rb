@@ -29,7 +29,7 @@ class UsersTest < Test::Unit::TestCase
     get '/users'
 
     assert_equal(JSON.parse(last_response.body).map { |u| u['name'] }, %w[
-                   Peter
+                   Petar
                    John
                    Conway
                  ])
