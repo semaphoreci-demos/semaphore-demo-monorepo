@@ -5,9 +5,6 @@ defmodule Ui do
 
   use Plug.Router
 
-  plug(:match)
-  plug(:dispatch)
-
   get "/" do
     users = Ui.Users.fetch_all()
     page = Ui.UserListView.render(users)
