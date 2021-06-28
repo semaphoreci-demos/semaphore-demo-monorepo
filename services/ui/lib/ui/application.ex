@@ -6,7 +6,8 @@ defmodule Ui.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Ui, options: [port: 4001]}
+      {Plug.Cowboy, scheme: :http, plug: Ui, 
+        options: [port: String.to_integer(System.get_env("PORT") || "4001")]}
     ]
 
     opts = [strategy: :one_for_one, name: Ui.Supervisor]
