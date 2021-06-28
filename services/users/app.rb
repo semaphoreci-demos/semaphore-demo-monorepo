@@ -18,7 +18,6 @@ end
 
 post '/users' do
   user = JSON.parse(request.body.read)
-
   Users.add(user['name'])
   Users.list_all.to_json
 end

@@ -57,9 +57,14 @@ func main() {
 
 	loggedRouter := handlers.LoggingHandler(os.Stdout, Router)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+
 	srv := &http.Server{
 		Handler: loggedRouter,
-		Addr:    "127.0.0.1:8000",
+		Addr:    ":" + port,
 	}
 
 	srv.ListenAndServe()
