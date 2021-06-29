@@ -15,7 +15,7 @@ blocks:
             - cd services/users
             - git init
             - git config user.email "$HEROKU_EMAIL"
-            - git config user.name "$HEROKU_USERNAME"
+            - git config user.name "$HEROKU_EMAIL"
             - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
             - 'heroku git:remote -a "$APP_NAME"'
             - git add .
