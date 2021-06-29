@@ -37,12 +37,7 @@ blocks:
             - 'curl --location --request POST "${APP_NAME}.herokuapp.com/users" --header ''Content-Type: application/json'' --data-raw ''{ "name": "Rodrigo Amarante" }'''
             - sleep 1
             - '[[ $(curl --location --request GET "${APP_NAME}.herokuapp.com/users" --header ''Accept: application/json'') == ''[{"id":0,"name":"Rodrigo Amarante"}]'' ]]'
-  - name: Delete
-    task:
-      env_vars:
-        - name: APP_NAME
-          value: monorepo-users-staging
-      jobs:
-        - name: Staging
+      epilogue:
+        always:
           commands:
             - 'heroku apps:delete "$APP_NAME" --confirm "$APP_NAME"'
