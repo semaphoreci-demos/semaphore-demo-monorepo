@@ -41,3 +41,5 @@ blocks:
         always:
           commands:
             - 'heroku apps:delete "$APP_NAME" --confirm "$APP_NAME"'
+      secrets:
+        - name: heroku
