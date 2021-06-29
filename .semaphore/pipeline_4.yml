@@ -11,3 +11,8 @@ blocks:
         - name: 'Job #1'
           commands:
             - echo "job 1"
+promotions:
+  - name: Deploy to Production
+    pipeline_file: pipeline_6.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
