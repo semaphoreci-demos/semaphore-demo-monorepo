@@ -43,3 +43,8 @@ blocks:
             - 'heroku apps:delete "$APP_NAME" --confirm "$APP_NAME"'
       secrets:
         - name: heroku
+promotions:
+  - name: Deploy to Production
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: change_in('/services/users') AND result = 'passed'
