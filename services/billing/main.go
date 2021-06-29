@@ -45,7 +45,7 @@ var Router *mux.Router
 
 func Initialize() {
 	Router = mux.NewRouter()
-
+	// test
 	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
 
 	http.Handle("/", Router)
