@@ -3,7 +3,7 @@ require_relative './app'
 require 'test/unit'
 require 'rack/test'
 
-# :nodoc: ss
+# :nodoc: sss
 class UsersTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
