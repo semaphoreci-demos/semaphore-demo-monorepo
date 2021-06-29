@@ -1,7 +1,6 @@
 defmodule Ui do
   @moduledoc """
   Main router for the UI component.
-  
   """
 
   use Plug.Router
