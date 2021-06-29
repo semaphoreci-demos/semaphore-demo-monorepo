@@ -21,4 +21,3 @@ post '/users' do
   Users.add(user['name'])
   Users.list_all.to_json
 end
- 
