@@ -20,6 +20,7 @@ class UsersTest < Test::Unit::TestCase
 
     assert(Users.list_all.find { |u| u[:name] == 'Peter' })
   end
+  
 
   def test_listing_users
     post '/users', { name: 'Peter' }.to_json
