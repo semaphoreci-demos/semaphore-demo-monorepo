@@ -23,7 +23,6 @@ blocks:
             - git push heroku master --force
       secrets:
         - name: heroku-tomfern
-      env_vars:
   - name: Smoke tests
     task:
       jobs:
