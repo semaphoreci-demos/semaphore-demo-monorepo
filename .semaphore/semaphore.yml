@@ -69,15 +69,15 @@ blocks:
           commands:
             - go test ./...
 promotions:
-  - name: Stage users
-    pipeline_file: pipeline_2.yml
-    auto_promote:
-      when: change_in('/services/users') AND result = 'passed'
-  - name: Stage ui
-    pipeline_file: pipeline_4.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
-  - name: Stage billing
-    pipeline_file: pipeline_5.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
+  - name: Stage service
+    pipeline_file: parametrized-stage.yml
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - user
+            - billing
+            - ui
+          default_value: User
+          description: What to deploy?
+          name: SERVICE
