@@ -1,5 +1,5 @@
 version: v1.0
-name: 'Stage ${{parameters.SERVICE}}'
+name: "Stage ${{parameters.SERVICE}}"
 agent:
   machine:
     type: e1-standard-2
@@ -16,7 +16,7 @@ blocks:
             - git config user.email "$HEROKU_EMAIL"
             - git config user.name "$HEROKU_EMAIL"
             - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
-            - 'heroku git:remote -a "monorepo-${SERVICE}-staging"'
+            - 'heroku git:remote -a "monorepo-${SERVICE}"'
             - git add .
             - git commit -m "deploy $APP_NAME to Heroku"
             - git push heroku master --force
