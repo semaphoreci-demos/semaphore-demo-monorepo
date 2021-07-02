@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: Stage
           commands:
-            - 'heroku apps:create "monorepo-${SERVICE}-staging"
+            - 'heroku apps:create "monorepo-${SERVICE}-staging"'
             - checkout
             - cd services/users
             - git init
