@@ -1,5 +1,5 @@
 version: v1.0
-name: Stage '${{parameters.SERVICE}}'
+name: 'Stage ${{parameters.SERVICE}}'
 agent:
   machine:
     type: e1-standard-2
@@ -37,6 +37,21 @@ blocks:
             - 'heroku apps:delete "monorepo-${SERVICE}-staging" --confirm "monorepo-${SERVICE}-staging"'
       secrets:
         - name: heroku-tomfern
+
+promotions:
+  - name: Deploy to production
+    pipeline_file: parametrized-deploy.yml
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - user
+            - billing
+            - ui
+          default_value: user
+          description: What to deploy?
+          name: SERVICE
+
 # promotions:
 #   - name: Deploy to Production
 #     pipeline_file: pipeline_3.yml
