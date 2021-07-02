@@ -78,6 +78,6 @@ promotions:
             - user
             - billing
             - ui
-          default_value: User
+          default_value: user
           description: What to deploy?
           name: SERVICE
