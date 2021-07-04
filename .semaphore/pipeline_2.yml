@@ -8,13 +8,21 @@ queue:
   name: '${{parameters.ENVIRONMENT}}-queue'
   scope: project
 blocks:
-  - name: Echo
+  - name: Deploy
     task:
       jobs:
-        - name: Who is on the call
+        - name: Stage
           commands:
-            - echo $PARTICIPANTS
+            - 'heroku apps:create "monorepo-${ENVIRONMENT}-staging"'
+            - checkout
+            - cd services/$ENVIRONMENT
+            - git init
+            - git config user.email "$HEROKU_EMAIL"
+            - git config user.name "$HEROKU_EMAIL"
+            - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
+            - 'heroku git:remote -a "monorepo-${ENVIRONMENT}-staging"'
+            - git add .
+            - git commit -m "deploy monorepo-${ENVIRONMENT}-staging to Heroku"
+            - git push heroku master --force
       secrets:
-        - name: 'param-${{parameters.ENVIRONMENT}}'
-    run:
-      when: ' change_in(''.semaphore'')'
+        - name: heroku-tomfern
