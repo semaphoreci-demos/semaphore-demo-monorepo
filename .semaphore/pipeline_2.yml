@@ -8,36 +8,13 @@ queue:
   name: '${{parameters.ENVIRONMENT}}-queue'
   scope: project
 blocks:
-  - name: Deploy
+  - name: Echo
     task:
       jobs:
-        - name: Stage
+        - name: Who is on the call
           commands:
-            - 'heroku apps:create "monorepo-${ENVIRONMENT}-staging"'
-            - checkout
-            - cd services/$ENVIRONMENT
-            - git init
-            - git config user.email "$HEROKU_EMAIL"
-            - git config user.name "$HEROKU_EMAIL"
-            - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
-            - 'heroku git:remote -a "monorepo-${ENVIRONMENT}-staging"'
-            - git add .
-            - git commit -m "deploy monorepo-${ENVIRONMENT}-staging to Heroku"
-            - git push heroku master --force
+            - echo $PARTICIPANTS
       secrets:
-        - name: heroku-tomfern
-  - name: Smoke tests
-    task:
-      jobs:
-        - name: Tests
-          commands:
-            - 'curl --location --request POST "monorepo-${ENVIRONMENT}-staging.herokuapp.com/users" --header ''Content-Type: application/json'' --data-raw ''{ "name": "Rodrigo Amarante" }'''
-            - sleep 1
-            - '[[ $(curl --location --request GET "monorepo-${ENVIRONMENT}-staging.herokuapp.com/users" --header ''Accept: application/json'') == ''[{"id":0,"name":"Rodrigo Amarante"}]'' ]]'
-      epilogue:
-        always:
-          commands:
-            - 'heroku apps:delete "monorepo-${ENVIRONMENT}-staging" --confirm "monorepo-${ENVIRONMENT}-staging"'
-      secrets:
-        - name: heroku-tomfern
-
+        - name: 'param-${{parameters.ENVIRONMENT}}'
+    run:
+      when: ' change_in(''.semaphore'')'
