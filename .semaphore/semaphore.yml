@@ -70,7 +70,7 @@ blocks:
             - go test ./...
 promotions:
   - name: Stage
-    pipeline_file: parametrized-stage.yml
+    pipeline_file: pipeline_2.yml
     parameters:
       env_vars:
         - required: true
