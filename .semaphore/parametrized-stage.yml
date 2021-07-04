@@ -43,7 +43,7 @@ promotions:
     pipeline_file: parametrized-deploy.yml
     parameters:
       env_vars:
-        - required: false
+        - required: true
           options:
             - user
             - billing
