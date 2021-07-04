@@ -78,21 +78,5 @@ promotions:
             - Stage
             - Production
           default_value: Stage
-          description: Where to deploy?
+          description: What to deploy?
           name: ENVIRONMENT
-        - required: false
-          options: []
-          description: Release name?
-          name: RELEASE
-        - required: true
-          options:
-            - CS
-            - Engineering
-            - Marketing
-            - Support
-          description: Who is on the call?
-          name: PARTICIPANTS
-        - required: false
-          options: []
-          description: What is the topic of the call?
-          name: TOPIC
