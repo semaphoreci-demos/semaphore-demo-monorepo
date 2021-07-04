@@ -12,7 +12,7 @@ blocks:
           commands:
             - 'heroku apps:create "monorepo-${SERVICE}-staging"'
             - checkout
-            - cd services/users
+            - cd services/$SERVICE
             - git init
             - git config user.email "$HEROKU_EMAIL"
             - git config user.name "$HEROKU_EMAIL"
@@ -47,8 +47,7 @@ promotions:
           options:
             - user
             - billing
-            - ui
-          default_value: ${{parameters.SERVICE}}
+          default_value: '${{parameters.SERVICE}}'
           description: What to deploy?
           name: SERVICE
 
