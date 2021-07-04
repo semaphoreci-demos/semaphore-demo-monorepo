@@ -1,5 +1,5 @@
 version: v1.0
-name: 'Stage ${{parameters.SERVICE}}'
+  name: '${{parameters.SERVICE}} Stage'
 agent:
   machine:
     type: e1-standard-2
@@ -19,7 +19,7 @@ blocks:
             - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
             - 'heroku git:remote -a "monorepo-${SERVICE}-staging"'
             - git add .
-            - git commit -m "deploy $APP_NAME to Heroku"
+            - git commit -m "deploy monorepo-${SERVICE}-staging to Heroku"
             - git push heroku master --force
       secrets:
         - name: heroku-tomfern
@@ -43,12 +43,12 @@ promotions:
     pipeline_file: parametrized-deploy.yml
     parameters:
       env_vars:
-        - required: true
+        - required: false
           options:
             - user
             - billing
             - ui
-          default_value: user
+          default_value: ${{parameters.SERVICE}}
           description: What to deploy?
           name: SERVICE
 
