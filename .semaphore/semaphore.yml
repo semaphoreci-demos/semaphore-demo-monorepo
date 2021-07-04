@@ -75,7 +75,7 @@ promotions:
       env_vars:
         - required: true
           options:
-            - user
+            - users
             - billing
           default_value: user
           description: What to deploy?
