@@ -5,13 +5,69 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Hello
+  - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
+    dependencies: []
+    run:
+      when: 'change_in(''/services/ui'', {exclude: ''/services/ui/**/*.md''})'
     task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/ui
+          - sem-version elixir 1.9
+          - cache restore
+          - mix local.hex --force
+          - mix local.rebar --force
+          - mix deps.get
+          - mix deps.compile
+          - cache store
       jobs:
-        - name: Hello there
+        - name: Lint
           commands:
-            - checkout
-            - echo "Hello there!"
+            - mix credo
+        - name: Test
+          commands:
+            - mix test
+  - name: "\U0001F64E — User Service"
+    dependencies: []
+    run:
+      when: 'change_in(''/services/users'', {exclude: ''/services/users/**/*.md''})'
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/users
+          - sem-version ruby 2.5
+          - cache restore
+          - bundle install
+          - cache store
+      jobs:
+        - name: Lint
+          commands:
+            - bundle exec rubocop
+        - name: Test
+          commands:
+            - bundle exec ruby test.rb
+  - name: "\U0001F4B0 — Billing Service"
+    dependencies: []
+    run:
+      when: 'change_in(''/services/billing'', {exclude: ''/services/billing/**/*.md''})'
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cd services/billing
+          - sem-version go 1.14
+          - cache restore
+          - go get ./...
+          - cache store
+      jobs:
+        - name: Lint
+          commands:
+            - gofmt -l .
+        - name: Test
+          commands:
+            - go test ./...
 promotions:
   - name: Publish changes
     pipeline_file: pipeline_2.yml
