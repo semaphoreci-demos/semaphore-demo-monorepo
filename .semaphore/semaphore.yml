@@ -69,8 +69,8 @@ blocks:
           commands:
             - go test ./...
 promotions:
-  - name: Publish changes
-    pipeline_file: pipeline_2.yml
+  - name: Stage
+    pipeline_file: parametrized-stage.yml
     parameters:
       env_vars:
         - required: true
