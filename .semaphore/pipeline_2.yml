@@ -1,50 +1,21 @@
 version: v1.0
-name: Stage users to heroku
+name: '${{parameters.PARTICIPANTS}} call regarding ${{parameters.TOPIC}}'
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+queue:
+  name: '${{parameters.ENVIRONMENT}}-queue'
+  scope: project
 blocks:
-  - name: Deploy
+  - name: Echo
     task:
       jobs:
-        - name: Stage
+        - name: Who is on the call
           commands:
-            - 'heroku apps:create "$APP_NAME"'
-            - checkout
-            - cd services/users
-            - git init
-            - git config user.email "$HEROKU_EMAIL"
-            - git config user.name "$HEROKU_EMAIL"
-            - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
-            - 'heroku git:remote -a "$APP_NAME"'
-            - git add .
-            - git commit -m "deploy $APP_NAME to Heroku"
-            - git push heroku master --force
+            - echo $PARTICIPANTS
       secrets:
-        - name: heroku
-      env_vars:
-        - name: APP_NAME
-          value: monorepo-users-staging
-  - name: Smoke tests
-    task:
-      env_vars:
-        - name: APP_NAME
-          value: monorepo-users-staging
-      jobs:
-        - name: Tests
-          commands:
-            - 'curl --location --request POST "${APP_NAME}.herokuapp.com/users" --header ''Content-Type: application/json'' --data-raw ''{ "name": "Rodrigo Amarante" }'''
-            - sleep 1
-            - '[[ $(curl --location --request GET "${APP_NAME}.herokuapp.com/users" --header ''Accept: application/json'') == ''[{"id":0,"name":"Rodrigo Amarante"}]'' ]]'
-      epilogue:
-        always:
-          commands:
-            - 'heroku apps:delete "$APP_NAME" --confirm "$APP_NAME"'
-      secrets:
-        - name: heroku
-promotions:
-  - name: Deploy to Production
-    pipeline_file: pipeline_3.yml
-    auto_promote:
-      when: change_in('/services/users') AND result = 'passed'
+        - name: 'param-${{parameters.ENVIRONMENT}}'
+    run:
+      when: ' change_in(''.semaphore'')'
+
