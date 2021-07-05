@@ -8,12 +8,13 @@ queue:
   name: '${{parameters.ENVIRONMENT}}-queue'
   scope: project
 blocks:
-  - name: Deploy
+  - name: Echo
     task:
       jobs:
-        - name: Stage
+        - name: Who is on the call
           commands:
-          - echo Yes
-
+            - echo $ENVIRONMENT
       secrets:
-        - name: heroku-tomfern
+        - name: 'param-${{parameters.ENVIRONMENT}}'
+    run:
+      when: ' change_in(''.semaphore'')'
