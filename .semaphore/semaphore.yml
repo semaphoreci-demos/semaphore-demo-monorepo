@@ -75,8 +75,8 @@ promotions:
       env_vars:
         - required: true
           options:
-            - Stage
-            - Production
+            - users
+            - billing
           default_value: Stage
           description: What to deploy?
           name: ENVIRONMENT
