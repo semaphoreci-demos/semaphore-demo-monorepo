@@ -77,6 +77,6 @@ promotions:
           options:
             - users
             - billing
-          default_value: Stage
+          default_value: users
           description: What to deploy?
           name: ENVIRONMENT
