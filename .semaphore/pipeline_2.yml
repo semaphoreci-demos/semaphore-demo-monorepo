@@ -14,6 +14,9 @@ blocks:
         - name: Who is on the call
           commands:
             - echo $ENVIRONMENT
+            - 'heroku apps:create "monorepo-${SERVICE}-staging"'
+            - checkout
+            - cd services/$ENVIRONMENT
       secrets:
         - name: 'param-${{parameters.ENVIRONMENT}}'
     run:
