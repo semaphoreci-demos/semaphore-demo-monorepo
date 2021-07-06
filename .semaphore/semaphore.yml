@@ -83,7 +83,7 @@ promotions:
   - name: Stage users
     pipeline_file: pipeline_12.yml
     auto_promote:
-      when: change_in('/services/users/')
+      when: 'change_in(''/services/users/'', {default_branch: ''tf/parametrized''})'
     parameters:
       env_vars:
         - required: true
@@ -96,7 +96,7 @@ promotions:
   - name: Stage billing
     pipeline_file: pipeline_12.yml
     auto_promote:
-      when: change_in('/services/billing/')
+      when: 'change_in(''/services/billing/'', {default_branch: ''tf/parametrized''})'
     parameters:
       env_vars:
         - required: true
