@@ -10,4 +10,4 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - echo "job 1"
+            - echo "$SVC"
