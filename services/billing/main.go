@@ -15,7 +15,7 @@ type BillingInfo struct {
 	Discount   string `json:"discount"`
 }
 
-// go
+// go go
 
 func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
