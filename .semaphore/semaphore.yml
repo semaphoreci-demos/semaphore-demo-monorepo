@@ -1,5 +1,5 @@
 version: v1.0
-name: Parameterized promotions example
+name: Monorepo Demo
 agent:
   machine:
     type: e1-standard-2
@@ -8,7 +8,7 @@ blocks:
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/ui'', {exclude: ''/services/ui/**/*.md''})'
+      when: "change_in('/services/ui', {exclude: '/services/ui/**/*.md'})"
     task:
       prologue:
         commands:
@@ -21,6 +21,7 @@ blocks:
           - mix deps.get
           - mix deps.compile
           - cache store
+
       jobs:
         - name: Lint
           commands:
@@ -28,10 +29,11 @@ blocks:
         - name: Test
           commands:
             - mix test
+
   - name: "\U0001F64E — User Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/users'', {exclude: ''/services/users/**/*.md''})'
+      when: "change_in('/services/users', {exclude: '/services/users/**/*.md'})"
     task:
       prologue:
         commands:
@@ -41,17 +43,20 @@ blocks:
           - cache restore
           - bundle install
           - cache store
+
       jobs:
         - name: Lint
           commands:
             - bundle exec rubocop
+
         - name: Test
           commands:
             - bundle exec ruby test.rb
+
   - name: "\U0001F4B0 — Billing Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/billing'', {exclude: ''/services/billing/**/*.md''})'
+      when: "change_in('/services/billing', {exclude: '/services/billing/**/*.md'})"
     task:
       prologue:
         commands:
@@ -65,44 +70,7 @@ blocks:
         - name: Lint
           commands:
             - gofmt -l .
+
         - name: Test
           commands:
             - go test ./...
-promotions:
-  - name: Stage
-    pipeline_file: pipeline_2.yml
-    parameters:
-      env_vars:
-        - required: true
-          options:
-            - users
-            - billing
-          default_value: users
-          description: What to deploy?
-          name: ENVIRONMENT
-  - name: Stage users
-    pipeline_file: pipeline_12.yml
-    auto_promote:
-      when: 'change_in(''/services/users/'', {default_branch: ''tf/parametrized''})'
-    parameters:
-      env_vars:
-        - required: true
-          options:
-            - users
-            - billing
-          default_value: users
-          description: What service to deploy?
-          name: SVC
-  - name: Stage billing
-    pipeline_file: stage.yml
-    auto_promote:
-      when: 'change_in(''/services/billing/'', {default_branch: ''tf/parametrized''})'
-    parameters:
-      env_vars:
-        - required: true
-          options:
-            - users
-            - billing
-          default_value: billing
-          description: What service to deploy?
-          name: SVC

@@ -6,8 +6,6 @@ require 'sinatra'
 # It keeps users in-memory. In the real world, this would be written
 # into a database.
 #
-#
-#
 
 require 'json'
 require_relative './models'
