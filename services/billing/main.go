@@ -16,6 +16,8 @@ type BillingInfo struct {
 	Discount   string `json:"discount"`
 }
 
+// go go
+
 func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
@@ -68,7 +70,7 @@ var Router *mux.Router
 
 func Initialize() {
 	Router = mux.NewRouter()
-
+	// testss
 	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
 
 	Router.HandleFunc("/billing/{user_id}/charge", ChargeHandler).Methods("POST")

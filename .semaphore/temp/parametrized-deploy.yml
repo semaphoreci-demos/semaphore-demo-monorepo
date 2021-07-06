@@ -1,0 +1,24 @@
+version: v1.0
+name: '${{parameters.SERVICE}} prod'
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Deploy
+    task:
+      jobs:
+        - name: Deploy
+          commands:
+            - checkout
+            - cd services/$SERVICE
+            - git init
+            - git config user.email "$HEROKU_EMAIL"
+            - git config user.name "$HEROKU_EMAIL"
+            - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
+            - 'heroku git:remote -a "monorepo-${SERVICE}"'
+            - git add .
+            - 'git commit -m "deploy monorepo-${SERVICE} to Heroku"'
+            - git push heroku master --force
+      secrets:
+        - name: heroku-tomfern

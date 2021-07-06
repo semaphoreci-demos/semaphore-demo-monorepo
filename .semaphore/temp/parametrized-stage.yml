@@ -1,0 +1,51 @@
+version: v1.0
+name: '${{parameters.SERVICE}} Stage'
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Deploy
+    task:
+      jobs:
+        - name: Stage
+          commands:
+            - 'heroku apps:create "monorepo-${SERVICE}-staging"'
+            - checkout
+            - cd services/$SERVICE
+            - git init
+            - git config user.email "$HEROKU_EMAIL"
+            - git config user.name "$HEROKU_EMAIL"
+            - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
+            - 'heroku git:remote -a "monorepo-${SERVICE}-staging"'
+            - git add .
+            - 'git commit -m "deploy monorepo-${SERVICE}-staging to Heroku"'
+            - git push heroku master --force
+      secrets:
+        - name: heroku-tomfern
+  - name: Smoke tests
+    task:
+      jobs:
+        - name: Tests
+          commands:
+            - 'curl --location --request POST "monorepo-${SERVICE}-staging.herokuapp.com/users" --header ''Content-Type: application/json'' --data-raw ''{ "name": "Rodrigo Amarante" }'''
+            - sleep 1
+            - '[[ $(curl --location --request GET "monorepo-${SERVICE}-staging.herokuapp.com/users" --header ''Accept: application/json'') == ''[{"id":0,"name":"Rodrigo Amarante"}]'' ]]'
+      epilogue:
+        always:
+          commands:
+            - 'heroku apps:delete "monorepo-${SERVICE}-staging" --confirm "monorepo-${SERVICE}-staging"'
+      secrets:
+        - name: heroku-tomfern
+promotions:
+  - name: Deploy to production
+    pipeline_file: parametrized-deploy.yml
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - users
+            - billing
+          default_value: '${{parameters.SERVICE}}'
+          description: What to deploy?
+          name: SERVICE

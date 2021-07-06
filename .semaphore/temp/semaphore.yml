@@ -1,5 +1,5 @@
 version: v1.0
-name: Parameterized promotions example
+name: Monorepo Demo
 agent:
   machine:
     type: e1-standard-2
@@ -69,8 +69,8 @@ blocks:
           commands:
             - go test ./...
 promotions:
-  - name: Stage
-    pipeline_file: pipeline_2.yml
+  - name: Stage service
+    pipeline_file: parametrized-stage.yml
     parameters:
       env_vars:
         - required: true
@@ -79,30 +79,4 @@ promotions:
             - billing
           default_value: users
           description: What to deploy?
-          name: ENVIRONMENT
-  - name: Stage users
-    pipeline_file: pipeline_12.yml
-    auto_promote:
-      when: 'change_in(''/services/users/'', {default_branch: ''tf/parametrized''})'
-    parameters:
-      env_vars:
-        - required: true
-          options:
-            - users
-            - billing
-          default_value: users
-          description: What service to deploy?
-          name: SVC
-  - name: Stage billing
-    pipeline_file: stage.yml
-    auto_promote:
-      when: 'change_in(''/services/billing/'', {default_branch: ''tf/parametrized''})'
-    parameters:
-      env_vars:
-        - required: true
-          options:
-            - users
-            - billing
-          default_value: billing
-          description: What service to deploy?
-          name: SVC
+          name: SERVICE

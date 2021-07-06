@@ -1,0 +1,18 @@
+version: v1.0
+name: Stage billing to heroku
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Block #1'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo "job 1"
+promotions:
+  - name: Deploy to Production
+    pipeline_file: pipeline_7.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
