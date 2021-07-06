@@ -18,7 +18,7 @@ blocks:
             - 'git config credential.helper ''!f() { printf "%s\n" "username=''$HEROKU_EMAIL''" "password=''$HEROKU_API_KEY''"; };f'''
             - 'heroku git:remote -a "monorepo-${SERVICE}"'
             - git add .
-            - git commit -m "deploy monorepo-${SERVICE} to Heroku"
+            - 'git commit -m "deploy monorepo-${SERVICE} to Heroku"'
             - git push heroku master --force
       secrets:
         - name: heroku-tomfern

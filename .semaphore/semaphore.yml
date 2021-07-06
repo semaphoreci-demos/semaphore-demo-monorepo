@@ -80,3 +80,29 @@ promotions:
           default_value: users
           description: What to deploy?
           name: ENVIRONMENT
+  - name: Stage users
+    pipeline_file: pipeline_12.yml
+    auto_promote:
+      when: change_in('/services/users/')
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - users
+            - billing
+          default_value: users
+          description: What service to deploy?
+          name: SVC
+  - name: Stage billing
+    pipeline_file: pipeline_12.yml
+    auto_promote:
+      when: change_in('/services/billing/')
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - users
+            - billing
+          default_value: billing
+          description: What service to deploy?
+          name: SVC
