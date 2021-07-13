@@ -23,6 +23,10 @@ services.
 
 Read more about [monorepo support on Semaphore][monorepo].
 
+## Running the services
+
+After building each service, you may start all of them with: `./start.sh`
+
 ## License
 
 Copyright (c) 2021 Rendered Text
