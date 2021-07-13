@@ -1,5 +1,7 @@
 # Semaphore demo CI pipeline for Monorepo projects
 
+[![Build Status](https://semaphore-demos.semaphoreci.com/badges/semaphore-demo-monorepo/branches/master.svg)](https://semaphore-demos.semaphoreci.com/projects/semaphore-demo-monorepo)
+
 Example application and continuous integration (CI) pipeline showing how to
 run a Monorepo project on [Semaphore][semaphore].
 
