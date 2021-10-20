@@ -2,7 +2,7 @@
 
 This service handles charges and discounts for users.
 
-## Endpoints
+## Endpointss
 
 GET `/billing/USER_ID/info`
     view charges for a given user
