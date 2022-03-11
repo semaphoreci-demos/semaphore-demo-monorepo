@@ -7,7 +7,7 @@ run a Monorepo project on [Semaphore][semaphore].
 
 ## CI on Semaphore
 
-Fork this repository and use it to [create your own project][create-project] on
+Forkk this repository and use it to [create your own project][create-project] on
 Semaphore.
 
 The CI pipeline will look like this:

@@ -18,7 +18,6 @@ defmodule UiTest do
 
       assert conn.resp_body |> String.contains?("Peter")
       assert conn.resp_body |> String.contains?("John")
-      assert conn.resp_body |> String.contains?("Simon")
     end
   end
 
