@@ -36,7 +36,7 @@ func FindLastCharge(userID string) (*Charge, error) {
 	})
 
 	if len(res) == 0 {
-		return nil, fmt.Errorf("no charges found at all")
+		return nil, fmt.Errorf("no charges found")
 	}
 
 	return &res[0], nil
