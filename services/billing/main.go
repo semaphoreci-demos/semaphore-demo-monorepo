@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 
 	handlers "github.com/gorilla/handlers"
 	mux "github.com/gorilla/mux"
@@ -41,12 +42,36 @@ func BillingInfoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+func ChargeHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	var c BillingInfo
+
+	err := json.NewDecoder(r.Body).Decode(&c)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	charge, _ := strconv.Atoi(c.LastCharge)
+	discount, _ := strconv.Atoi(c.Discount)
+
+	AddCharge(vars["user_id"], charge)
+	AddDiscount(vars["user_id"], discount)
+
+	res, err := json.Marshal(c)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
 var Router *mux.Router
 
 func Initialize() {
 	Router = mux.NewRouter()
 
 	Router.HandleFunc("/billing/{user_id}/info", BillingInfoHandler)
+
+	Router.HandleFunc("/billing/{user_id}/charge", ChargeHandler).Methods("POST")
 
 	http.Handle("/", Router)
 }
@@ -68,4 +93,5 @@ func main() {
 	}
 
 	srv.ListenAndServe()
+
 }
