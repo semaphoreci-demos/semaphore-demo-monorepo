@@ -2,19 +2,26 @@ version: v1.0
 name: Monorepo Demo
 agent:
   machine:
-    type: e1-standard-2
-    os_image: ubuntu1804
+    type: s1-supernode-1
+    os_image: ''
 blocks:
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     run:
       when: "change_in('/services/ui', {exclude: '/services/ui/**/*.md'})"
     task:
+      agent:
+        machine:
+          type: s1-supernode-1
+          os_image: ''
+        containers:
+        - name: main
+          image: semaphoreci/elixir:1.9
+
       prologue:
         commands:
           - checkout
           - cd services/ui
-          - sem-version elixir 1.9
           - cache restore
           - mix local.hex --force
           - mix local.rebar --force
@@ -35,11 +42,18 @@ blocks:
     run:
       when: "change_in('/services/users', {exclude: '/services/users/**/*.md'})"
     task:
+      agent:
+        machine:
+          type: s1-supernode-1
+          os_image: ''
+        containers:
+        - name: main
+          image: semaphoreci/ruby:2.7
+
       prologue:
         commands:
           - checkout
           - cd services/users
-          - sem-version ruby 2.5
           - cache restore
           - bundle install
           - cache store
@@ -58,11 +72,18 @@ blocks:
     run:
       when: "change_in('/services/billing', {exclude: '/services/billing/**/*.md'})"
     task:
+      agent:
+        machine:
+          type: s1-supernode-1
+          os_image: ''
+        containers:
+        - name: main
+          image: semaphoreci/golang:1.14
+
       prologue:
         commands:
           - checkout
           - cd services/billing
-          - sem-version go 1.14
           - cache restore
           - go get ./...
           - cache store
