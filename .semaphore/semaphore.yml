@@ -57,7 +57,7 @@ blocks:
         commands:
           - checkout
           - cd services/billing
-          - sem-version go 1.14
+          - sem-version go 1.22
           - cache restore
           - go get ./...
           - cache store
