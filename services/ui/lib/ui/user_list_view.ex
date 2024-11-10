@@ -20,7 +20,7 @@ defmodule Ui.UserListView do
   end
 
   def render_list(users) do
-    "<table>#{Enum.map(users, &render_user/1) |> Enum.join("\n")}</table>"
+    "<table>#{Enum.map_join(users, "\n", &render_user/1)}</table>"
   end
 
   def render_user(user) do
