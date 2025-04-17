@@ -1,11 +1,15 @@
 pipeline {
     agent {
-        docker { image 'node:22.14.0-alpine3.21' }
+        docker { image 'registry.semaphoreci.com/golang:1.22' }
     }
     stages {
-        stage('Test') {
+        stage('Lint') {
             steps {
-                sh 'node --eval "console.log(process.platform,process.env.CI)"'
+                sh 'ls'
+                sh 'cd services/billing'
+                sh 'ls'
+                sh 'go get ./...'
+                sh 'gofmt -l .'
             }
         }
     }
