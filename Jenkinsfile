@@ -1,4 +1,7 @@
 pipeline {
+
+    agent none
+
     environment {
         HOME = "/tmp/build"
       }
