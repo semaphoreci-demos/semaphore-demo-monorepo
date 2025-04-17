@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        HOME = "/build"
+        HOME = "/tmp/build"
       }
 
     stages {
