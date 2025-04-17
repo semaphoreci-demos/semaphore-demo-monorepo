@@ -58,7 +58,7 @@ pipeline {
             }
         }
 
-        stage('UI service') {
+        stage('User service') {
             parallel {
                 stage('Lint') {
                     agent {
