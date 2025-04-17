@@ -1,8 +1,4 @@
 pipeline {
-    agent {
-        docker { image 'registry.semaphoreci.com/golang:1.22' }
-    }
-
     environment {
         HOME = "/tmp/build"
       }
@@ -11,6 +7,9 @@ pipeline {
         stage('Billing service') {
             parallel {
                 stage('Lint') {
+                    agent {
+                        docker { image 'registry.semaphoreci.com/golang:1.22' }
+                    }
                     steps {
                         sh 'mkdir -p $HOME'
                         sh 'cd services/billing; go get ./...'
@@ -18,6 +17,9 @@ pipeline {
                     }
                 }
                 stage('Test') {
+                    agent {
+                        docker { image 'registry.semaphoreci.com/golang:1.22' }
+                    }
                     steps {
                         sh 'mkdir -p $HOME'
                         sh 'cd services/billing; go get ./...'
