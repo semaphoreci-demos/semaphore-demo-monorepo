@@ -1,6 +1,6 @@
 module github.com/semaphoreci-demos/sempahore-demo-monorepo/services/billing
 
-go 1.24
+go 1.22
 
 require (
 	github.com/gorilla/handlers v1.5.1
