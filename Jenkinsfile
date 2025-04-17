@@ -5,11 +5,8 @@ pipeline {
     stages {
         stage('Lint') {
             steps {
-                sh 'ls'
-                sh 'cd services/billing'
-                sh 'ls'
-                sh 'go get ./...'
-                sh 'gofmt -l .'
+                sh 'cd services/billing; go get ./...'
+                sh 'cd services/billing; gofmt -l .'
             }
         }
     }
