@@ -8,13 +8,13 @@ blocks:
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/ui'', {exclude: ''/services/ui/**/*.md''})'
+      when: 'change_in(''/services/ui'', {exclude: ''/services/ui/**/*.md'', pipeline_file: ''ignore'' })'
     task:
       prologue:
         commands:
           - checkout
           - cd services/ui
-          - sem-version elixir 1.9
+          - sem-version elixir 1.17
           - cache restore
           - mix local.hex --force
           - mix local.rebar --force
@@ -31,13 +31,13 @@ blocks:
   - name: "\U0001F64E — User Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/users'', {exclude: ''/services/users/**/*.md''})'
+      when: 'change_in(''/services/users'', {exclude: ''/services/users/**/*.md'', pipeline_file: ''ignore'' })'
     task:
       prologue:
         commands:
           - checkout
           - cd services/users
-          - sem-version ruby 2.5
+          - sem-version ruby 2.7
           - cache restore
           - bundle install
           - cache store
@@ -51,13 +51,13 @@ blocks:
   - name: "\U0001F4B0 — Billing Service"
     dependencies: []
     run:
-      when: 'change_in(''/services/billing'', {exclude: ''/services/billing/**/*.md''})'
+      when: 'change_in(''/services/billing'', {exclude: ''/services/billing/**/*.md'', pipeline_file: ''ignore'' })'
     task:
       prologue:
         commands:
           - checkout
           - cd services/billing
-          - sem-version go 1.14
+          - sem-version go 1.22
           - cache restore
           - go get ./...
           - cache store
