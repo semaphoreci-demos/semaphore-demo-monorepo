@@ -19,9 +19,14 @@ defmodule Ui.UserListView do
     "<p>No users registered in the system</p>"
   end
 
-  def render_list(users) do
-    "<table>#{Enum.map(users, &render_user/1) |> Enum.join("\n")}</table>"
-  end
+
+def render_list(users) do
+  """
+  <table>
+  #{Enum.map_join(users, "\n", &render_user/1)}
+  </table>
+  """
+end
 
   def render_user(user) do
     """
