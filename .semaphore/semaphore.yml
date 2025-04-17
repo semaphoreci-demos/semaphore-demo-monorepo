@@ -8,7 +8,7 @@ blocks:
   - name: "\U0001F469\U0001F3FB‍\U0001F3A8 — UI Service"
     dependencies: []
     run:
-      when: "change_in('/services/ui', {exclude: '/services/ui/**/*.md', pipeline_file: 'ignore' })"
+      when: 'change_in(''/services/ui'', {exclude: ''/services/ui/**/*.md'', pipeline_file: ''ignore'' })'
     task:
       prologue:
         commands:
