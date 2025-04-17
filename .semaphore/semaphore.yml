@@ -14,7 +14,7 @@ blocks:
         commands:
           - checkout
           - cd services/ui
-          - sem-version elixir 1.18
+          - sem-version elixir 1.17
           - cache restore
           - mix local.hex --force
           - mix local.rebar --force
